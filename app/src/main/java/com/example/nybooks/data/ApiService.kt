@@ -2,7 +2,6 @@ package com.example.nybooks.data
 
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 
 object ApiService {
     private fun initRetrofit() : Retrofit{
