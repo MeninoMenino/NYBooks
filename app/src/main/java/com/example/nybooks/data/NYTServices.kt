@@ -1,10 +1,15 @@
 package com.example.nybooks.data
 
+import com.example.nybooks.data.response.BookBodyResponse
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface NYTServices{
     //Get list
     @GET("lists.json")
-    fun listRepos(): Call<List<>>
+    fun getBooks(
+        @Query("api-key") apiKey: String = "8KrxkYO5APztXGVPTxnb12oTkSA1SI1d",
+        @Query("list") list: String = "hardcover-fiction"
+    ): Call<BookBodyResponse>
 }
