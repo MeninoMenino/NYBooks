@@ -8,11 +8,15 @@ import com.example.nybooks.R
 import com.example.nybooks.data.model.Book
 import kotlinx.android.synthetic.main.item_book.view.*
 
-class BooksAdapter(private val books : List<Book>) : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
+class BooksAdapter(
+    private val books: List<Book>,
+    val onItemClickListener: ((book: Book) -> Unit)
+) : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
-        return BooksViewHolder(itemView)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
+        return BooksViewHolder(itemView, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: BooksViewHolder, position: Int) {
@@ -22,14 +26,19 @@ class BooksAdapter(private val books : List<Book>) : RecyclerView.Adapter<BooksA
     override fun getItemCount() = books.count()
 
     //ViewHolder
-    class BooksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class BooksViewHolder(itemView: View, val onItemClickListener: ((book: Book) -> Unit)) :
+        RecyclerView.ViewHolder(itemView) {
 
         private val title = itemView.textTitle
         private val author = itemView.textAuthor
 
-        fun bindView(book : Book){
+        fun bindView(book: Book) {
             title.text = book.title
             author.text = book.author
+
+            itemView.setOnClickListener {
+                onItemClickListener(book)
+            }
         }
     }
 }
